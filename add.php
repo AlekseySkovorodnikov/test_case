@@ -7,11 +7,17 @@ if(isset($_POST['submit'])){
 		$email = mysql_real_escape_string($_POST['email']);
 		$id_role = mysql_real_escape_string($_POST['id_role']);
 		$password = mysql_real_escape_string($_POST['password']);
-		
-		mysql_query("INSERT INTO users(login, name, email, id_role, password ) VALUES ('$login', '$name', '$email', '$id_role', '$password' )"); 
+		if (filter_var($email, FILTER_VALIDATE_EMAIL) == true) {
+			mysql_query("INSERT INTO users(login, name, email, id_role, password ) VALUES ('$login', '$name', '$email', '$id_role', '$password' )"); }
+		else 
+			{
+				echo "Некорректный e-mail";	
+			}
 	}
 	
 }
 
-header("Location: main.php");
+	header("Refresh:3; URL=main.php" );
+
+//header("Location: main.php");
 ?>
