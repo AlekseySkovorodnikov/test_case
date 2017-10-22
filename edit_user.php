@@ -1,7 +1,8 @@
 ﻿<?php
 session_start(); // Стартуем сессию
 ?>
-<?php echo  $_SESSION['id_user']; 
+<?php
+//echo  $_SESSION['id_user']; 
 $id_user = $_SESSION['id_user'];
 ?> 
 
@@ -46,25 +47,30 @@ if(isset($_POST['save'])) {
 
 	mysql_query("UPDATE users SET login ='$login' WHERE id_user = $id_user")
 				or die(mysql_error()); 
-	echo "Saved!";
 	
 	$name = $_POST['name'];
 	mysql_query("UPDATE users SET name ='$name' WHERE id_user = $id_user")
 				or die(mysql_error()); 
-	echo "Saved!";
-	
+		
 	$email = $_POST['email'];
-	mysql_query("UPDATE users SET email ='$email' WHERE id_user = $id_user")
-				or die(mysql_error()); 
-	echo "Saved!";
 	
+	if (filter_var($email, FILTER_VALIDATE_EMAIL) == true) {
+			
+		mysql_query("UPDATE users SET email ='$email' WHERE id_user = $id_user")
+					or die(mysql_error()); 
+		
+		}
+	else 
+		{
+		echo "Некорректный e-mail";
+		}
 	$password = $_POST['password'];
 	mysql_query("UPDATE users SET password ='$password' WHERE id_user = $id_user")
 				or die(mysql_error()); 
-	echo "Saved!";
 		
-	
-	header("Location: main.php");			
+	header("Refresh:3; URL=main.php" );
+
+//	header("Location: main.php");			
 }
 mysql_close($conn);
 ?>

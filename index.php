@@ -30,7 +30,9 @@ echo '<script>alert("Поле пароль не заполненно");</script>
 }
 else  // Иначе если все поля заполненны
 {    
-$login = $_POST['login']; // Записываем логин в переменную 
+$login = $_POST['login']; // Записываем логин в переменную
+	
+	
 $password = $_POST['password']; // Записываем пароль в переменную           
 $query = mysqli_query($connection, "SELECT `id_user`, id_role FROM `users` WHERE `login` = '$login' AND `password` = '$password'"); // Формируем переменную с запросом к базе данных с проверкой пользователя
 $result = mysqli_fetch_array($query); // Формируем переменную с исполнением запроса к БД 
@@ -81,4 +83,3 @@ unset($_SESSION['id_role']); // Чистим сессию id_role
 {
 echo '<div align="center"><a href="reg.php">Регистрация</a></div>'; // Выводим нашу ссылку регистрации
 } ?>
-	

@@ -19,34 +19,38 @@ if(isset($_POST['save'])) {
 
 	mysql_query("UPDATE users SET login ='$login' WHERE id_user = $id")
 				or die(mysql_error()); 
-	echo "Saved!";
 
 	
 	$email = $_POST['email'];
-
+	
+	if (filter_var($email, FILTER_VALIDATE_EMAIL) == true) {
+	
 	mysql_query("UPDATE users SET email ='$email' WHERE id_user = $id")
 				or die(mysql_error()); 
-	echo "Saved!";
+	}
+	else 
+		{
+		echo "Некорректный e-mail";
+		}
+	
 
 	
 	
 	$name = $_POST['name'];
 	mysql_query("UPDATE users SET name ='$name' WHERE id_user = $id")
 				or die(mysql_error()); 
-	echo "Saved!";
 	
 	$id_role = $_POST['id_role'];
 	mysql_query("UPDATE users SET id_role ='$id_role' WHERE id_user = $id")
 				or die(mysql_error()); 
-	echo "Saved!";
 	
 	$password = $_POST['password'];
 	mysql_query("UPDATE users SET password ='$password' WHERE id_user = $id")
 				or die(mysql_error()); 
-	echo "Saved!";
 	
-	
-	header("Location: main.php");			
+	header("Refresh:3; URL=main.php" );
+
+//	header("Location: main.php");			
 }
 mysql_close($conn);
 ?>
