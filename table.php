@@ -2,7 +2,15 @@
 session_start(); // Стартуем сессию
 ?>
 
-<h1><?php echo "Добро пожаловать, " . $_SESSION['login'] . " !" ?> </h1>;
+<?php
+//echo $_SESSION['id_user']; 
+if (!isset($_SESSION['id_role'])) // если в сессии не загружены логин и id админа
+	{
+	header("Location: http://localhost/test_case/index.php");	
+	}	
+?>
+
+<h1><?php echo "Добро пожаловать, " . $_SESSION['login'] . " !" ?> </h1>
 <?php
 // определяем начальные данные
     $db_host = 'localhost';
@@ -20,8 +28,22 @@ session_start(); // Стартуем сессию
     or die("Could not select DB: " . mysql_error());
 
     // выбираем все значения из таблицы "users"
-    $qr_result = mysql_query("select * from " . $db_table_to_show)
+		if(isset($_GET['srt'])) {
+		$srt = $_GET['srt'];
+	}
+	else {
+		$srt = 'id_user';	
+		}
+
+    $qr_result = mysql_query("select * from " . $db_table_to_show . " order by " . $srt)
     or die(mysql_error());
+?>
+	<p><b> Сортировать по:</b> </p>
+	<u><a href="table.php?srt=login">Логин </a></u>
+	<u><a href="table.php?srt=name">Имя  </a></u>
+	<u><a href="table.php?srt=id_role">Роль  </a> </u>   
+
+<?php
     // выводим на страницу сайта заголовки HTML-таблицы
     echo '<table border="1">';
   echo '<thead>';

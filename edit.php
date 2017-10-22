@@ -35,6 +35,16 @@ if(isset($_POST['save'])) {
 				or die(mysql_error()); 
 	echo "Saved!";
 	
+	$id_role = $_POST['id_role'];
+	mysql_query("UPDATE users SET id_role ='$id_role' WHERE id_user = $id")
+				or die(mysql_error()); 
+	echo "Saved!";
+	
+	$password = $_POST['password'];
+	mysql_query("UPDATE users SET password ='$password' WHERE id_user = $id")
+				or die(mysql_error()); 
+	echo "Saved!";
+	
 	
 	header("Location: main.php");			
 }

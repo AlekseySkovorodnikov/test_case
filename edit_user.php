@@ -53,10 +53,16 @@ if(isset($_POST['save'])) {
 				or die(mysql_error()); 
 	echo "Saved!";
 	
-	$name = $_POST['email'];
+	$email = $_POST['email'];
 	mysql_query("UPDATE users SET email ='$email' WHERE id_user = $id_user")
 				or die(mysql_error()); 
 	echo "Saved!";
+	
+	$password = $_POST['password'];
+	mysql_query("UPDATE users SET password ='$password' WHERE id_user = $id_user")
+				or die(mysql_error()); 
+	echo "Saved!";
+		
 	
 	header("Location: main.php");			
 }
@@ -90,11 +96,6 @@ mysql_close($conn);
 		<!--<td><input type="submit" name="save" value="Сохранить" /></td>-->
 	</tr>
 
-		<tr>
-		<td>Role:</td>
-		<td><input type="text" name="id_role" value="<?php echo $id_role ?>" size='30' /></td>
-		<!--<td><input type="submit" name="save" value="Сохранить" /></td>-->
-	</tr>
 		<tr>
 		<td>Password:</td>
 		<td><input type="text" name="password" value="<?php echo $password ?>" size='30' /></td>

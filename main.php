@@ -16,9 +16,13 @@ if ($_SESSION['id_role'] !== '1') // если в сессии не загруж�
 <title>Категории</title>
 </head>
 <body>
+	<h1 align=	center> Административная панель </h1>
+	<h2>Добавить нового пользователя: </h2>
 <form method="post" action="add.php">
-<table>
-	<tr>
+<table> 
+	
+	
+	<tr> 
 		<td>Логин:</td>
 		<tr><td><input type="text" name="login" size='30' /></td></tr>
 		<td>Имя:</td>
@@ -37,25 +41,42 @@ if ($_SESSION['id_role'] !== '1') // если в сессии не загруж�
 <br/>
 <table border="1">
 	<?php
-	include("db.php");				
-	$result = mysql_query("SELECT * FROM `users`");
+	include("db.php");
+	if(isset($_GET['srt'])) {
+		$srt = $_GET['srt'];
+	}
+	else {
+		$srt = 'id_user';	
+		}
+	$result = mysql_query("SELECT * FROM `users`  order by " . $srt );
 	
+	echo "Сортировать по:" . '<br>';
+	?>
+	<a href="main.php?srt=login">Логин</a><br>
+	<a href="main.php?srt=name">Имя</a><br>
+	<a href="main.php?srt=id_role">Роль</a><br>    
+<?php	
 	if (!$result)
 		die("Error: Data not found.");
    echo "\n<tr>";
    echo "<td> ID </td>";
-   echo "<td> ID Role </td>";
+   echo "<td>ID Role </td>";
    echo "<td> name </td>";
    echo "<td> E-mail </td>";
    echo "<td> Login </td>";
    echo "<td> Password </td>";
- 	echo  "</tr>";
+ 	echo  "</tr>";?>
+	<b><?php echo "Список Пользователей";		
+		?></b> <br>
 	
-	while($test = mysql_fetch_array($result)) {
+	
+	
+		
+<?php	while($test = mysql_fetch_array($result)) {
 		$id = $test['id_user'];	
 		
 		echo "\n<tr>";	
-		 
+		
 		echo"<td><font color='black'>" .$test['id_user']."</font></td>";
 		echo"<td><font color='black'>" .$test['id_role']."</font></td>";
 		echo"<td><font color='black'>" .$test['name']."</font></td>";
@@ -70,19 +91,15 @@ if ($_SESSION['id_role'] !== '1') // если в сессии не загруж�
 	?>
 </table>
 <?php
-//if (isset($_SESSION['login']) && isset($_SESSION['id_user'])) // если в сессии загружены логин и id
+if (isset($_SESSION['login']) && isset($_SESSION['id_user'])) // если в сессии загружены логин и id
 {
 	echo '<div align="center"><a href="index.php?exit">Выход</a></div>'; // Выводим нашу ссылку выхода
 
 	echo"<td> <a href ='edit_user.php'>Редактировать свой профиль</a>";
-
-
-} ?>
-
-
+} 
 	
+
+	?>
 	
 </body>
 </html>																				
-<?php echo  $_SESSION ['id_user'];
-?>
