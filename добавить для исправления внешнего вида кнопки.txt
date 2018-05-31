@@ -1,0 +1,44 @@
+// добавить в файл JS в самое начало
+WA.ready(function(){
+	if (WA.getLocation() == "job") {
+		if (WA.current.JobState == 2) {
+			if (WA.current.toolBar.buttons["JobApproved"]) {
+				WA.current.toolBar.buttons["JobApproved"].disable();
+			}
+			if (WA.current.toolBar.buttons["JobForCorrection"]) {
+				WA.current.toolBar.buttons["JobForCorrection"].disable();
+			}
+		}	
+	}
+});
+
+
+
+// добавить в файл XML 
+<Card type="Job" Standartroutecode="SentToSmth" blockid="2" jsfile="/js/BaseWebAccsess.js">
+	<ToolPanel>
+		<ToolGroup name="TOOLBAR_JOB_PERFORM">
+		<remove name="JobDoIt" />
+		<ToolItem name="JobApproved"
+				icon="/App_Sprites/ToolbarAndTab/PerformJob.png"
+				text="JOB_RESULT_APPROVED"
+				jsaction="BaseWebAccsess.performJobAsAction('Согласовано', 0)"
+				position="0" />
+		<ToolItem name="JobForCorrection"
+				icon="/App_Sprites/ToolbarAndTab/ResumeTsak.png"
+				text="JOB_RESULT_FOR_CORRECTION"
+				jsaction="BaseWebAccsess.performJobAsAction('На доработку', 1)"
+				position="2" /> <!-- проверить как будет работать если установить position="1" -->
+		</ToolGroup>
+	</ToolPanel>			
+</Card>						
+
+
+// добавить функцию в JS 
+BaseWebAccsess.performJobAsAction = function(resultName, index) {
+	if (resultName) {
+		WA.current.performResult({Name: resultName, index: index, DisplayName: resultName});
+		}
+	}
+
+
