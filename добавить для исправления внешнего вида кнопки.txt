@@ -41,4 +41,4 @@ BaseWebAccsess.performJobAsAction = function(resultName, index) {
 		}
 	}
 
-// всякие изменения в файле 	
+// всякие изменения в файле, а потом спуллим это и получим в локальной репе  	
